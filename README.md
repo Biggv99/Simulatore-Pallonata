@@ -1,59 +1,16 @@
-# SimulatorePallonata
+[ --- 📚 Simulatore di Pallonata --- ]
+Simulatore di Pallonata è un giochino leggero e divertente sviluppato in Angular, pensato per chi vuole sfogare la propria rabbia su qualcuno senza troppe pretese.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
 
-## Development server
 
-To start a local development server, run:
+[ --- 🧱 Interfaccia e interazione utente --- ]
+Navbar: in alto per navigare facilmente tra le pagine del gioco.
+Pokemon-cheers: in basso trovi i tifosi! Sì sono dei Pokémon, perché erano facili da prendere. Non hanno il biglietto per entrare nel playground, ma li apprezziamo comunque perché fanno il tifo.
 
-```bash
-ng serve
-```
+🏠 Homepage: verrai accolto da un form di registrazione/login. Non è obbligatorio registrarsi per giocare, ma creare un account ti permette di: salvare i tuoi progressi e confrontarti con altri giocatori nella Leaderboard. Gli utenti vengono salvati nel localStorage. 
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+🏆 Leaderboard: una tabella mostra le statistiche di tutti gli utenti registrati. Si possono ordinare i risultati cliccando sulla prima righa con le etichette.
 
-## Code scaffolding
+🖥 Play (playground): puoi colpire la palla e lanciare una cannonata in faccia alla vittima. Un presentatore ti dirà come muoverti.
+(Le collisioni sono ancora mal gestite e si può colpire la palla anche se non si è proprio vicini. Ci lavorerò in futuro).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
