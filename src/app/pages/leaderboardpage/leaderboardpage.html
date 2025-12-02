@@ -1,0 +1,26 @@
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Posizione</th>
+        <th>Nome</th>
+        <th (click)="sortBy('punteggioTotale')">Punteggio Totale</th>
+        <th (click)="sortBy('punteggioMassimo')">Punteggio Massimo</th>
+        <th (click)="sortBy('tempoGioco')">Tempo Gioco</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container>
+        @for (user of savedUsers; track $index) {
+          <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.punteggioTotale }}</td>
+            <td>{{ user.punteggioMassimo }}</td>
+            <td>{{ user.tempoGioco }}s</td>
+          </tr>
+        }
+      </ng-container>
+    </tbody>
+  </table>
+</div>

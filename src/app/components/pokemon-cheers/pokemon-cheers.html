@@ -1,0 +1,15 @@
+<section>
+  @if(isLoading()) {
+    <div class="loader"></div> 
+  } @else {
+    @for (p of randomPokemon(); track $index) {
+      <app-pokemon-card [pokemon]="p"></app-pokemon-card>
+    }
+  }
+</section>
+
+<div class="terreno">
+  @for (i of [].constructor(4); track $index) {
+    <img src="assets/images/erba.webp" alt="Erba">
+  }
+</div>

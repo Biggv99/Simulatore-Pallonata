@@ -1,0 +1,11 @@
+<div class="palla"
+     [style.left.px]="left()"
+     [style.bottom.px]="bottom()">
+  <img class="pallaImg" src="assets/images/palla.webp" alt="palla">
+
+  @if (currentFrames_effetti?.length) {
+    <div class="effetto">
+      <img [src]="currentFrames_effetti?.[frame_effetti()]" alt="Effetto">
+    </div>
+  }
+</div>

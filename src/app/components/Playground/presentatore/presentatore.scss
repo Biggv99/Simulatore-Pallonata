@@ -1,0 +1,67 @@
+.presentatore {
+  position: absolute;
+  bottom: 200px;
+  right: -200px;     
+  z-index: 5;
+  transition: right 1.5s ease-out;
+
+  &.entra {
+    right: 200px;
+  }
+
+  &.esce {
+    right: -250px;
+  }
+
+  img {
+    width: 115px;
+    height: auto;
+    display: block;
+  }
+}
+
+.overlay {
+  position: absolute; 
+  bottom: 400px; 
+  right: 100px; 
+  z-index: 10;
+  border-radius: 20px;
+  border: 2px solid black;
+  background: rgba(255, 255, 255, 0.95); 
+  backdrop-filter: blur(10px);
+  padding: 10px;
+  max-width: 250px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  .button {
+    position: absolute; 
+    top: 0px; 
+    right: 0px; 
+    border: none;
+    background: #ff4d4d; 
+    color: white; 
+    font-size: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #e60000;
+    }
+  }
+
+  .testo {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+    text-align: left;
+    word-wrap: break-word;
+    margin-top: 10px;
+  }
+}

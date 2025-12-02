@@ -1,0 +1,26 @@
+.vittima {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: scaleX(-1);
+  z-index: 1;
+
+  img {
+    display: block;
+    width: 200px;
+    height: auto;
+  }
+}
+
+.effetto {
+  position: absolute;
+  bottom: 80px;
+  right: 60px;
+  z-index: 2;
+
+  img {
+    display: block;
+    width: 100px;
+    height: auto;
+  }
+}

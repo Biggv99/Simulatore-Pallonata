@@ -1,0 +1,19 @@
+<div class="presentatore"
+     [class.entra]="entra()"
+     [class.esce]="uscita()">
+  <img src="assets/images/presentatore.webp" alt="Presentatore">
+</div>
+
+@if (istruzioniVisibili()) {
+  <div class="overlay">
+    <button class="button" (click)="playUscita()">✕</button>
+    <div class="testo">
+      <p>
+        COLPISCILA CON IL TUO COLPO MICIDIALE!!<br>
+        <br> 1. WASD per muoverti!
+        <br> 2. BARRA SPAZIATRICE per muoverti!
+        <br> 3. SHIFT per tirare una cannonata spaziale!
+      </p>
+    </div>
+  </div>
+}

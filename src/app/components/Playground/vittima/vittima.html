@@ -1,0 +1,10 @@
+<div class="vittima" (click)="playHitAnimation(1)">
+  <img [src]="currentFrames_vittima[frame_vittima()]" alt="Vittima">
+</div>
+
+@if (currentFrames_effetti?.length) {
+  <div class="effetto">
+    <img [src]="currentFrames_effetti?.[frame_effetti()]" alt="Effetto">
+  </div>
+}
+  
