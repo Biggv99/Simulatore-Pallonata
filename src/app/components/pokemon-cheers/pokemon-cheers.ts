@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { PokemonService } from '../../servives/pokemonService'; 
+import { PokemonService } from '../../services/pokemonService'; 
 import { PokemonData } from '../../models/pokemonModel';
 import { PokemonCard } from '../pokemon-card/pokemon-card';
 import { filter } from 'rxjs/operators';

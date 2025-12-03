@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PlayerService } from '../../servives/playerService';
+import { PlayerService } from '../../services/playerService';
 
 @Component({
   selector: 'app-navbar',

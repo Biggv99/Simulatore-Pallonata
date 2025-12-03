@@ -68,20 +68,10 @@ export class FisicaService {
 
     // collisione tra due Oggetto
     interseca(a: Oggetto, b: Oggetto) {
-
-        // calcolo centro degli oggetti
-        const aCx = a.x - a.larghezza / 2;
-        const aCy = a.y - a.altezza / 2;
-        const bCx = b.x - b.larghezza / 2;
-        const bCy = b.y - b.altezza / 2;
-
-        // confronto usando metà larghezza e altezza
-        const collideX = Math.abs(aCx - bCx) < (a.larghezza/2 + b.larghezza/2);
-        const collideY = Math.abs(aCy - bCy) < (a.altezza/2 + b.altezza/2);
+        const collideX = (a.x < b.x + b.larghezza) && (a.x + a.larghezza > b.x);
+        const collideY = (a.y < b.y + b.altezza) && (a.y + a.altezza > b.y);
         return collideX && collideY;
     }
-
-
 }
 
 /*

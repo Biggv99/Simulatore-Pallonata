@@ -4,8 +4,8 @@ import { Player } from '../../components/Playground/player/player';
 import { Campo } from '../../components/Playground/campo/campo';
 import { Palla } from '../../components/Playground/palla/palla';
 import { Presentatore } from '../../components/Playground/presentatore/presentatore';
-import { PlayerService } from '../../servives/playerService';
-import { FisicaService } from '../../servives/Fisica/fisicaService';
+import { PlayerService } from '../../services/playerService';
+import { FisicaService } from '../../services/Fisica/fisicaService';
 
 @Component({
   selector: 'app-playgroundpage',

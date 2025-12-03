@@ -13,5 +13,5 @@ Pokemon-cheers: in basso trovi i tifosi! Sì sono dei Pokémon, perché erano fa
 🏆 Leaderboard: una tabella mostra le statistiche di tutti gli utenti registrati. Si possono ordinare i risultati cliccando sulla prima righa con le etichette.
 
 🖥 Play (playground): puoi colpire la palla e lanciare una cannonata in faccia alla vittima. Un presentatore ti dirà come muoverti.
-(Le collisioni sono ancora mal gestite e si può colpire la palla anche se non si è proprio vicini. Ci lavorerò in futuro).
+
 

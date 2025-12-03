@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../servives/userService';
+import { UserService } from '../../services/userService';
 import { UserData } from '../../models/userModel';
-import { PlayerService } from '../../servives/playerService';
+import { PlayerService } from '../../services/playerService';
 
 @Component({
   selector: 'app-homepage',
