@@ -1,4 +1,4 @@
-import { Component, signal, inject} from '@angular/core';
+import { Component, signal, inject, OnDestroy } from '@angular/core';
 import { PlayerService } from '../../../services/playerService';
 import { generaFrames } from '../../../services/frameService';
 
@@ -7,12 +7,13 @@ import { generaFrames } from '../../../services/frameService';
   templateUrl: './vittima.html',
   styleUrl: './vittima.scss',
 })
-export class Vittima {
+export class Vittima implements OnDestroy {
 
+  // player service
   private playerService = inject(PlayerService);
-  playerSignal = this.playerService.getPlayer();
+  private playerSignal = this.playerService.getPlayer();
 
-  // indice del frame corrente
+  // frame
   frame_vittima = signal(0);
   frame_effetti = signal(0);
 
@@ -20,77 +21,80 @@ export class Vittima {
   frames_hit = generaFrames('assets/images/Vittima/Hurt/0_Valkyrie_Hurt_', 11, 3);
   frames_hitEffect = generaFrames('assets/images/Effetti/hit/', 13, 2);
 
-  // array corrente da ciclare
   currentFrames_vittima: string[] = this.frames_idle;
   currentFrames_effetti: string[] | null = null;
 
-  // immagini pre-caricate
   images_vittima: HTMLImageElement[] = [];
   images_effetti: HTMLImageElement[] = [];
 
+  // intervallo animazione
+  private animationInterval: any = null;
+
   constructor() {
-    // pre-carica tutte le immagini vittima
+
     [...this.frames_idle, ...this.frames_hit].forEach(src => {
       const img = new Image();
       img.src = src;
       this.images_vittima.push(img);
     });
 
-    // pre-carica tutte le immagini effetti
     this.frames_hitEffect.forEach(src => {
       const img = new Image();
       img.src = src;
       this.images_effetti.push(img);
     });
 
-    // avvia animazione idle
+    // avvia animazione
     this.startAnimation();
   }
 
+  // Avvia animazione
   startAnimation() {
-    setInterval(() => {
-      this.frame_vittima.set((this.frame_vittima() + 1) % this.currentFrames_vittima.length);
-    }, 50);
-  }
+    this.animationInterval = setInterval(() => {
 
-  playIdleAnimation() {
-    this.currentFrames_vittima = this.frames_idle;
-    this.frame_vittima.set(0);
+      // vittima
+      this.frame_vittima.set( (this.frame_vittima() + 1) % this.currentFrames_vittima.length );
+
+      if ( (this.currentFrames_vittima === this.frames_hit) && (this.frame_vittima() === this.frames_hit.length - 1) ) {
+        this.currentFrames_vittima = this.frames_idle;
+        this.frame_vittima.set(0);
+      }
+
+      // effetto
+      if (this.currentFrames_effetti) {
+        this.frame_effetti.set( (this.frame_effetti() + 1) % this.currentFrames_effetti.length );
+
+        if (this.frame_effetti() === this.currentFrames_effetti.length - 1) {
+          this.currentFrames_effetti = null;
+          this.frame_effetti.set(0);
+        }
+      }
+    }, 50);
   }
 
   playHitAnimation(effetto: number) {
 
-    // assegna dei punti random al giocatore 
-    const punti = Math.floor(Math.random() * 200) * effetto; 
-    console.log("Punti assegnati:", punti);
-
-    // setta i punti al giocatore
+    // assegna punti
     if (this.playerSignal() !== null) {
-
+      const punti = Math.floor(Math.random() * 200) * effetto;
       this.playerService.setHigherScore(punti);
       this.playerService.setScore(punti);
     }
-    
-    // animazione vittima
+
+    // anima vittima
     this.currentFrames_vittima = this.frames_hit;
     this.frame_vittima.set(0);
 
-    // animazione effetto
+    // anima effetto
     this.currentFrames_effetti = this.frames_hitEffect;
     this.frame_effetti.set(0);
+  }
 
-    const effectInterval = setInterval(() => {
-      if (this.currentFrames_effetti) {
-        this.frame_effetti.set(
-          (this.frame_effetti() + 1) % this.currentFrames_effetti.length
-        );
-      }
-    }, 30);
-
-    setTimeout(() => {
-      clearInterval(effectInterval);
-      this.currentFrames_effetti = null;
-      this.playIdleAnimation();
-    }, this.frames_hit.length * 50);
+  // Disattiva animazione
+  ngOnDestroy() {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
   }
 }

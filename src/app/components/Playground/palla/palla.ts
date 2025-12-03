@@ -11,45 +11,38 @@ import { generaFrames } from '../../../services/frameService';
 })
 export class Palla {
 
-  // -- DATI -- //
-
-  private fisica: FisicaService = inject(FisicaService);
-  private pallaOggetto: Oggetto;
-
-  private keyboard: keyboardService = inject(keyboardService);;
-
-  private effectInterval: number | null = null;
-  
-  // posizione palla
+  //posizione
   x = signal(110);
   y = signal(25); 
 
-  // frame: immagini effetti
+  // frame 
   frame_effetti = signal(0);
   frames_hitEffect = generaFrames('assets/images/Effetti/flame/', 40, 2);
+
   currentFrames_effetti: string[] | null = null;
   images_effetti: HTMLImageElement[] = [];
   
-
   // Event per notificare l’impatto
   @Output() colpita = new EventEmitter<number>();
 
-  // -- COSTRUTTORE -- //
   constructor() {
 
-    // registra il palla nell'array di oggetti di scena
-    this.pallaOggetto = new Oggetto(110, 25, 50, 50, true, "palla");
-    this.fisica.registraOggetto(this.pallaOggetto);
+    // fisica palla: oggetti di scena
+    let fisica: FisicaService = inject(FisicaService);
+    let pallaOggetto: Oggetto;
+    pallaOggetto = new Oggetto(110, 25, 50, 50, true, "palla");
+    fisica.registraOggetto(pallaOggetto);
 
-    // gestione keyboard: spacebar
-    this.keyboard.onShiftPress(() => {
+    // gestione keyboard: shift premuto
+    let keyboard: keyboardService = inject(keyboardService);
+    keyboard.onShiftPress(() => {
 
       // cerca negli oggetti di scena l'oggetto col tipo player
-      const player = this.fisica.getOggetti().find(o => o.tipo === 'player');
+      const player = fisica.getOggetti().find(o => o.tipo === 'player');
       if (!player) return;
 
       // se la palla interseca con il player tira
-      if (this.fisica.interseca(this.pallaOggetto, player)){
+      if (fisica.interseca(pallaOggetto, player)){
         this.pallaAvanza();
       }
     });
@@ -62,24 +55,21 @@ export class Palla {
     });
   }
 
-  // -- METODI -- //
-
-  // Azione dalla spacebar
+  // Azione tiro palla
   pallaAvanza() {
+
+    let effectTimer: number | null = null;
+    
     // numero casuale per l'attivazione dell'effetto
     const randomNumber = Math.floor(Math.random() * 3);
-
-    // effetto si attiva
     if (randomNumber === 2) {
       this.currentFrames_effetti = this.frames_hitEffect;
       this.frame_effetti.set(0);
 
       // interval per cambiare i frame 
-      this.effectInterval = window.setInterval(() => {
+      effectTimer = window.setInterval(() => {
         if (this.currentFrames_effetti) {
-          this.frame_effetti.set(
-            (this.frame_effetti() + 1) % this.currentFrames_effetti.length
-          );
+          this.frame_effetti.set( (this.frame_effetti() + 1) % this.currentFrames_effetti.length );
         }
       }, 30);
     }
@@ -92,20 +82,16 @@ export class Palla {
     setTimeout(() => {
 
       // pulisco interval
-      if (this.effectInterval !== null) {
-        clearInterval(this.effectInterval);
-        this.effectInterval = null;
+      if (effectTimer !== null) {
+        clearInterval(effectTimer);
+        effectTimer = null;
       }
 
       // nascondo effetto e resetto segnali
       this.currentFrames_effetti = null;
 
       // evento e reset palla
-      if(randomNumber === 0){
-        this.colpita.emit(1);
-      } else {
-        this.colpita.emit(3);
-      }
+      this.colpita.emit(randomNumber === 0 ? 1 : 3);
 
       // rimette la palla nella posizione originale
       this.x.set(110);

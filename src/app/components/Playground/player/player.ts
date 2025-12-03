@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, OnDestroy } from '@angular/core';
 import { keyboardService } from '../../../services/keyboardService';
 import { FisicaService } from '../../../services/Fisica/fisicaService';
 import { Oggetto } from '../../../services/Fisica/Oggetto';
@@ -10,12 +10,9 @@ import { generaFrames } from '../../../services/frameService';
   templateUrl: './player.html',
   styleUrl: './player.scss',
 })
-export class Player {
+export class Player implements OnDestroy {
 
-  // keyboard
-  private keyboard: keyboardService = inject(keyboardService);
-
-  // fisica oggetto scena
+  // fisica player
   private fisica: FisicaService = inject(FisicaService);
   playerOggetto: Oggetto;  
 
@@ -28,22 +25,22 @@ export class Player {
   isJumping = signal(false);
   isKicking = signal(false);
 
-  // indice del frame corrente
+  // frame
   frame = signal(0);
   frames_idle = generaFrames('assets/images/Player/Idle/0_Skeleton_Warrior_Idle_', 17, 3);
   frames_kicking = generaFrames('assets/images/Player/Kicking/0_Skeleton_Warrior_Kicking_', 11, 3);
   frames_jumping = generaFrames('assets/images/Player/Jump Start/0_Skeleton_Warrior_Jump Start_', 5, 3);
   frames_running = generaFrames('assets/images/Player/Running/0_Skeleton_Warrior_Running_', 11, 3);
-  
-  // array corrente da ciclare
-  currentFrames: string[] = this.frames_idle;
 
-  // immagini pre-caricate
+  currentFrames: string[] = this.frames_idle;
   images: HTMLImageElement[] = [];
+
+  // intervallo animazione
+  private animationInterval: any = null;
 
   constructor() {
 
-    // registra il player nell'array di oggetti di scena
+    // registra player negli oggetti di scena
     this.playerOggetto = new Oggetto(0, 0, 200, 200, true, "player");
     this.fisica.registraOggetto(this.playerOggetto);
 
@@ -54,66 +51,45 @@ export class Player {
       this.images.push(img);
     });
 
-    // ascolta la barra spaziatrice dal servizio
-    this.keyboard.onSpacePress(() => {
+    // gestione keyboard
+    const keyboard = inject(keyboardService);
+
+    keyboard.onSpacePress(() => {
       if(!this.isJumping() && !this.isKicking()) {
         this.salta(300);
         this.playJumpingAnimation();
       }
     });
 
-    // sinistra premuto
-    this.keyboard.onAPress(() => {
-      this.muovi(-20, 0);
-      this.isMoving.set(true);
-    });
-
-    // destra premuto
-    this.keyboard.onDPress(() => {
-      this.muovi(20, 0);
-      this.isMoving.set(true);
-    });
-
-    // sinistra rilasciato
-    this.keyboard.onARelease(() => {
-      this.isMoving.set(false);
-    });
-
-    // destra rilasciato
-    this.keyboard.onDRelease(() => {
-      this.isMoving.set(false);
-    });
-
-    // tiro
-    this.keyboard.onShiftPress(() => {
+    keyboard.onShiftPress(() => {
       if(!this.isKicking() && !this.isJumping()) {
         this.playKickingAnimation();
       }
     });
 
-    // avvia animazione unica
+    keyboard.onAPress(() => { this.muovi(-20, 0); this.isMoving.set(true); });
+    keyboard.onDPress(() => { this.muovi(20, 0);  this.isMoving.set(true); });
+    keyboard.onARelease(() => this.isMoving.set(false));
+    keyboard.onDRelease(() => this.isMoving.set(false));
+
+    // avvia animazione 
     this.startAnimation();
   }
 
-  // ciclo unico dei frame
+  // Avvia animazione
   startAnimation() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
 
-      // logica animazioni 
-      if(this.isKicking()) {
-        this.currentFrames = this.frames_kicking;
-      } else if(this.isJumping()) {
-        this.currentFrames = this.frames_jumping;
-      } else if(this.isMoving()) {
-        this.currentFrames = this.frames_running;
-      } else {
-        this.currentFrames = this.frames_idle;
-      }
+      // determina animazione
+      if (this.isKicking()) this.currentFrames = this.frames_kicking;
+      else if (this.isJumping()) this.currentFrames = this.frames_jumping;
+      else if (this.isMoving()) this.currentFrames = this.frames_running;
+      else this.currentFrames = this.frames_idle;
 
-      // aggiorna frame
+      // avanza frame
       this.frame.set((this.frame() + 1) % this.currentFrames.length);
 
-      // controlla fine animazioni a durata fissa
+      // controlla fine animazioni
       if(this.isKicking() && this.frame() === this.frames_kicking.length - 1) {
         this.isKicking.set(false);
         this.frame.set(0);
@@ -122,22 +98,22 @@ export class Player {
         this.isJumping.set(false);
         this.frame.set(0);
       }
-
     }, 65);
   }
 
-  // animazioni con stato
+  // Animazione kick
   playKickingAnimation() {
     this.isKicking.set(true);
     this.frame.set(0);
   }
 
+  // Animazione jump
   playJumpingAnimation() {
     this.isJumping.set(true);
     this.frame.set(0);
   }
 
-  // muovi giocatore
+  // Muove
   muovi(dx: number, dy: number) {
     const x = this.x() + dx;
     const y = this.y() + dy;
@@ -147,9 +123,17 @@ export class Player {
     this.playerOggetto.setPosition(x, y);
   }
 
-  // salta giocatore
+  // Salta
   salta(dy: number) {
     this.y.set(this.y() + dy);
     setTimeout(() => this.y.set(0), 500);
+  }
+
+  // Disattiva animazione
+  ngOnDestroy() {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
   }
 }
