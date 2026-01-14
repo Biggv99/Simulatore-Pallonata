@@ -1,8 +1,8 @@
-    [ --- 📚 Simulatore di Pallonata --- ]
+[ --- Simulatore di Pallonata --- ]
 
 Simulatore di Pallonata è un giochino leggero e divertente sviluppato in Angular, pensato per chi vuole sfogare la propria rabbia su qualcuno senza troppe pretese.
 
-    [ --- 🧱 Interfaccia e interazione utente --- ]
+[ --- Interfaccia e interazione utente --- ]
 
 Navbar: in alto per navigare facilmente tra le pagine del gioco.
 
