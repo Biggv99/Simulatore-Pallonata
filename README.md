@@ -1,3 +1,5 @@
+Attualmente caricato su Versel: https://simulatore-pallonata.vercel.app/
+
 [ --- Simulatore di Pallonata --- ]
 
 Simulatore di Pallonata è un giochino leggero e divertente sviluppato in Angular, pensato per chi vuole sfogare la propria rabbia su qualcuno senza troppe pretese.
