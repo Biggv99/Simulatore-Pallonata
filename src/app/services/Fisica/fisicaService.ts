@@ -37,7 +37,7 @@ export class FisicaService {
 
         this.tricksTimer = setInterval(() => {
             this.checkAllCollisions();
-        }, 10);
+        }, 1000); //per ora ogni secondo
     }
 
     // Stoppa il loop automatico che controlla le collisioni 

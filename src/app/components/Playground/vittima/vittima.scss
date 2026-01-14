@@ -12,15 +12,46 @@
   }
 }
 
+.punteggio {
+  position: absolute;
+  top: -10px;    
+  left: 220px;
+  transform: translateX(-50%) scaleX(-1) rotate(-30deg);
+
+  &.nuke, &.flame {
+    display: block;
+    color: red;
+    font-size: 2.7rem;
+    font-weight: bold;
+    text-shadow: 5px 10px 10px black;
+  }
+
+  &.hit {
+    display: block;
+    color: gold;
+    font-size: 2rem;
+    text-shadow: 5px 10px 10px black;
+  }
+}
+
 .effetto {
   position: absolute;
-  bottom: 80px;
-  right: 60px;
-  z-index: 2;
+  z-index: 4;
 
   img {
-    display: block;
-    width: 100px;
+    position: absolute;
     height: auto;
+  }
+
+  &.nuke img {
+    bottom: -80px;
+    left: -220px;
+    width: 650px;
+  }
+
+  &.flame img, &.hit img {
+    bottom: 80px;
+    right: 60px;
+    width: 100px;
   }
 }

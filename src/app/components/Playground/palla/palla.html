@@ -3,9 +3,9 @@
      [style.bottom.px]="y()">
   <img class="pallaImg" src="assets/images/palla.webp" alt="palla">
 
-  @if (currentFrames_effetti?.length) {
+  @if (currentFrames.length > 0) {
     <div class="effetto">
-      <img [src]="currentFrames_effetti?.[frame_effetti()]" alt="Effetto">
+      <img [src]="currentFrames[frame()]" alt="Effetto">
     </div>
   }
 </div>

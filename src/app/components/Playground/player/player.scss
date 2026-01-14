@@ -1,12 +1,11 @@
 .player {
   position: absolute;
   z-index: 1;  
-  transition: bottom 0.98s cubic-bezier(0.25, 0.1, 0.25, 1);
 
   img {
     display: block;
     width: 200px;
     height: auto;
-    //border: 2px solid black;
+    border: 2px solid black;
   }
 }

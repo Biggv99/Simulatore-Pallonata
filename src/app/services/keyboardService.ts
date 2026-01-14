@@ -24,7 +24,7 @@ export class keyboardService {
       if (e.code === 'Space' && this.canPressSpace) {
         this.canPressSpace = false;       
         this.spaceCallbacks.forEach(cb => cb());
-        setTimeout(() => this.canPressSpace = true, 500);
+        setTimeout(() => this.canPressSpace = true, 1000);
       }
 
       // tasti di movimento

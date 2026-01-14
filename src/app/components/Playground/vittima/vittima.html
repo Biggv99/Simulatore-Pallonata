@@ -1,10 +1,23 @@
-<div class="vittima" (click)="playHitAnimation(1)">
-  <img [src]="currentFrames_vittima[frame_vittima()]" alt="Vittima">
+<div class="vittima" (click)="playHitAnimation(false)">
+  <img [src]="currentFrames[frame()]" alt="Vittima">
+
+  @if(mostraPunteggio()) {
+    <div class="punteggio" [ngClass]="tipoEffetto()">
+      @if(mostraPunteggio()) {
+        @if(tipoEffetto() === 'nuke' || tipoEffetto() === 'flame') {
+          <label class="forte">{{ punti }}!!!</label>
+        } @else { 
+          <label class="normale">{{ punti }}</label>
+        } 
+      }
+    </div>
+  }
+
+  @if (currentFrames_hit?.length) {
+    <div class="effetto" [ngClass]="tipoEffetto()">
+      <img [src]="currentFrames_hit?.[frame_effetti()]" alt="Effetto">
+    </div>
+  }
 </div>
 
-@if (currentFrames_effetti?.length) {
-  <div class="effetto">
-    <img [src]="currentFrames_effetti?.[frame_effetti()]" alt="Effetto">
-  </div>
-}
   

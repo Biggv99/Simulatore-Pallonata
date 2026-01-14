@@ -23,20 +23,16 @@
 .overlay {
   position: absolute; 
   bottom: 400px; 
-  right: 100px; 
-  z-index: 10;
+  right: 20px; 
   border-radius: 20px;
   border: 2px solid black;
-  background: rgba(255, 255, 255, 0.95); 
-  backdrop-filter: blur(10px);
-  padding: 10px;
-  max-width: 250px; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: white;
+  box-shadow: 10px 10px 20px black;
 
   .button {
     position: absolute; 
-    top: 0px; 
-    right: 0px; 
+    top: 5px; 
+    right: 5px; 
     border: none;
     background: #ff4d4d; 
     color: white; 
@@ -48,20 +44,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease;
-
-    &:hover {
-      background: #e60000;
-    }
   }
 
   .testo {
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
+    font-family: 'comic sans ms';
+    font-size: 12px;
+    margin: 20px 20px 20px 20px;
     color: #333;
-    line-height: 1.5;
-    text-align: left;
-    word-wrap: break-word;
-    margin-top: 10px;
   }
 }

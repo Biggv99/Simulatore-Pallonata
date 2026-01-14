@@ -3,7 +3,7 @@ export function generaFrames(path: string, quantità: number, zeri: number): str
 
     const frames: string[] = [];
     for (let i = 0; i < quantità; i++) {
-        frames.push(`${path}${String(i).padStart(zeri, '0')}.png`);
+        frames.push(`${path}${String(i).padStart(zeri, '0')}.webp`);
     }
     return frames;
 }
