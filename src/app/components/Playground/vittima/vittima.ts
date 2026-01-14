@@ -24,7 +24,7 @@ export class Vittima implements OnDestroy {
 
   // stato animazione iniziale
   animation = signal<'idle' | 'takingHit'>('idle');
-  tipoEffetto = signal<'nuke' | 'flame' | 'hit' | null>(null);
+  tipoEffetto = signal<'nuke' | 'flame' | 'hit' >('hit');
   private previousAnimation: string = 'idle';
   frame = signal(0);
 
